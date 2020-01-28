@@ -36,7 +36,7 @@ export default class App extends ValidationComponent {
     // Call ValidationComponent validate method
     this.validate({
       name: {minlength: 3, maxlength: 7, required: true},
-      email: {email: true},
+      email: {email: true, required: true},
       number: {numbers: true},
       date: {date: 'YYYY-MM-DD'},
     });
@@ -56,6 +56,10 @@ export default class App extends ValidationComponent {
                 onChangeText={name => this.setState({name})}
                 value={this.state.name}
               />
+              {this.isFieldInError('name') &&
+                this.getErrorsInField('name').map(errorMessage => (
+                  <Text style={styles.error}>{errorMessage}</Text>
+                ))}
             </Col>
           </Row>
           <Row size={12} style={styles.Row}>
@@ -67,6 +71,10 @@ export default class App extends ValidationComponent {
                 onChangeText={email => this.setState({email})}
                 value={this.state.email}
               />
+              {this.isFieldInError('email') &&
+                this.getErrorsInField('email').map(errorMessage => (
+                  <Text style={styles.error}>{errorMessage}</Text>
+                ))}
             </Col>
           </Row>
           <Row size={12} style={styles.Row}>
@@ -78,6 +86,10 @@ export default class App extends ValidationComponent {
                 onChangeText={number => this.setState({number})}
                 value={this.state.number}
               />
+              {this.isFieldInError('number') &&
+                this.getErrorsInField('number').map(errorMessage => (
+                  <Text style={styles.error}>{errorMessage}</Text>
+                ))}
             </Col>
           </Row>
           <Row size={12} style={styles.Row}>
@@ -89,6 +101,10 @@ export default class App extends ValidationComponent {
                 onChangeText={date => this.setState({date})}
                 value={this.state.date}
               />
+              {this.isFieldInError('date') &&
+                this.getErrorsInField('date').map(errorMessage => (
+                  <Text style={styles.error}>{errorMessage}</Text>
+                ))}
             </Col>
           </Row>
           <Row size={12} style={styles.Row}>
@@ -107,7 +123,7 @@ export default class App extends ValidationComponent {
               <Text>{errorMessage}</Text>
             ))}
 
-          <Text>{this.getErrorMessages()}</Text>
+          {/* <Text style={{color: 'red'}}>{this.getErrorMessages()}</Text> */}
         </Container>
       </SafeAreaView>
     );
@@ -125,7 +141,11 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   textInput: {
+    height: 60,
     backgroundColor: 'white',
     elevation: 10,
+  },
+  error: {
+    color: 'red',
   },
 });
